@@ -1,0 +1,98 @@
+body{
+    background-image: url(../static/images/background.png);
+}
+
+.main{
+    justify-content: center;
+    margin: 20px;
+    background-color: #ADADAD;
+    border-top-color: #64485C;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+header{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 10px;
+}
+
+header > img{
+    justify-self: end;
+}
+
+.div1{
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    align-items: center;
+}
+
+.div1 > p{
+    padding: 10px;
+    color: #64485C;
+    font-size: larger;
+    font-weight: bold;
+}
+
+nav{
+    display: flex;
+    flex-direction: row;
+    padding-left: 30px;
+    background-color: #3A454D;
+}
+
+nav > a{
+    text-decoration: none;
+    margin: 10px;
+    color: white;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.tablica{
+    border-collapse: collapse;
+    margin: 30px;
+    text-align: center;
+}
+
+.tablica > thead, th{
+    border: 1px solid black;
+    padding: 8px;
+    background-color: #3A454D;
+    color: white;
+}
+
+.tablica > thead th:nth-child(2){
+    width: 100px;
+}
+
+.tablica > tbody, td{
+    border: 1px solid black;
+    padding: 8px;
+    background-color: #DDDDDD;
+}
+
+.tablica > tbody tr:nth-child(even) td {
+    background-color:  #ADADAD;
+}
+
+.button{
+    text-decoration: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    justify-self: center;
+    border: 1px solid black;
+    background-color: lightgray;
+    font-stretch: narrower;
+    color: black;
+    border-radius: 5px;
+}

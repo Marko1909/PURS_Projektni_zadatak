@@ -1,0 +1,48 @@
+body{
+    background-image: url(../static/images/login-background.png);
+}
+
+.login{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.form{
+    display: grid;
+    grid-template-rows: 1fr;
+    padding: 30px;
+    padding-top: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.p_login{
+    font-size: x-large;
+    font-weight: bolder;
+}
+
+.form > label{
+    font-size: small;
+    margin-top: 10px;
+}
+
+.form > input{
+    outline: none;
+}
+
+.pogreska{
+    height: 5px;
+    justify-self: center;
+    color: red;
+    font-size: small;
+}
+
+.button{
+    margin-top: 20px;
+    width: 75px;
+    height: 25px;
+    justify-self: center;
+    background-color: lightblue;
+    border-radius: 5px;
+}

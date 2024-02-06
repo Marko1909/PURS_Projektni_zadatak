@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{naslov}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="main">
+        <header>
+            <div class="div1">
+                <p>{{username}}</p>
+                <img src="{{ url_for('static', filename='images/user-icon.png') }}" alt="User icon", width="70px">
+            </div>
+        </header>
+        
+        <nav>  
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="?id=1">Home</a>
+            {% if ovlasti == 1 %}
+            <a href="?id=2">Korisnici</a>
+            {% endif %}
+        </nav>
+        
+        <main>
+            {% block sadrzaj %}
+            <table class="tablica">
+                <thead>
+                    <th>Korisnik</th>
+                    <th>Vrata</th>
+                    <th>Datum</th>
+                    <th>Rezultat</th>
+                </thead>
+                <tbody>
+                    <!-- {% for podatak in podatci %}
+                    {% if podatak[0] %}
+                    <tr>
+                        <td>{{podatak[1]}}</td>
+                        <td>{{podatak[2]}}</td>
+                        <td>
+                            <form action="{{ url_for('delete', id_stupca=podatak[0], id_podatka=tip_podatka[0]) }}" method="POST" >
+                                <input type="submit" value="Obriši" class="button">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %} -->
+                </tbody>
+            </table>
+            {% endblock sadrzaj %}
+        </main>     
+    </div>
+</body>
+</html>

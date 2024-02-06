@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{naslov}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_login.css') }}">
+</head>
+
+<body>
+    <div class="login">
+        <form action="/login" method="POST" class="form">
+            <p class="p_login">Login</p>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            <br>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            <br>
+            {%if poruka%}
+            <p class="pogreska">{{poruka}}</p>
+            {%endif%}
+            <br>
+            <input type="submit" value="Login" class="button">
+        </form>
+    </div>
+</body>
+</html>
