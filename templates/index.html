@@ -18,39 +18,111 @@
         
         <nav>  
             <a href="{{ url_for('logout') }}">Logout</a>
-            <a href="?id=1">Home</a>
+            <a href="/?id=1">Home</a>
             {% if ovlasti == 1 %}
-            <a href="?id=2">Korisnici</a>
+            <a href="/?id=2">Korisnici</a>
             {% endif %}
         </nav>
         
         <main>
-            {% block sadrzaj %}
-            <table class="tablica">
-                <thead>
-                    <th>Korisnik</th>
-                    <th>Vrata</th>
-                    <th>Datum</th>
-                    <th>Rezultat</th>
-                </thead>
-                <tbody>
-                    <!-- {% for podatak in podatci %}
-                    {% if podatak[0] %}
-                    <tr>
-                        <td>{{podatak[1]}}</td>
-                        <td>{{podatak[2]}}</td>
-                        <td>
-                            <form action="{{ url_for('delete', id_stupca=podatak[0], id_podatka=tip_podatka[0]) }}" method="POST" >
-                                <input type="submit" value="Obriši" class="button">
-                            </form>
-                        </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %} -->
-                </tbody>
-            </table>
-            {% endblock sadrzaj %}
+            {% if statusi %}
+            <div class="div_statusi">
+                 <table class="tablica">
+                    <thead>
+                        <th>Korisnik</th>
+                        <th>Vrata</th>
+                        <th>Datum</th>
+                        <th>Rezultat</th>
+                    </thead>
+                    <tbody>
+                        {% for status in statusi %}
+                        <tr>
+                            <td>{{status[0]}}</td>
+                            <td>{{status[1]}}</td>
+                            <td>{{status[2]}}</td>
+                            <td>{{status[3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+           
+
+                {% if dozvole %}
+                <table class="tablica">
+                    <thead>
+                        <th>Dozvole</th>
+                    </thead>
+                    <tbody>
+                        {% for dozvola in dozvole %}
+                        <tr>
+                            <td>{{dozvola[0]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+
+
+
+            {% elif korisnici %}
+            <div class="div_korisnici">
+                <table class="tablica">
+                    <thead>
+                        <th>Korisnik</th>
+                        <th>Ovlasti</th>
+                        <th>RFID</th>
+                        <th>Uređivanje</th>
+                    </thead>
+                    <tbody>
+                        {% for korisnik in korisnici %}
+                        {% if korisnik[0] %}
+                        <tr>
+                            <td>{{korisnik[1]}}</td>
+                            <td>{{korisnik[2]}}</td>
+                            <td>{{korisnik[3]}}</td>
+                            <td>
+                            <form action="{{ url_for('uredi_korisnika', id_korisnik=korisnik[0]) }}" method="GET" >
+                                <input type="submit" value="Uredi" class="button">
+                                </form>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <button id="popup_button">Dodavanje novog korisnika</button>
+
+            {% endif %}     
+
         </main>     
     </div>
+
+    <div id="popup_window" class="popup">
+        <div class="popup_content">
+           <h1>Pop-up Window</h1>
+            <p>This is a pop-up window.</p>
+            <button id="close_button">Close</button> 
+        </div>
+        
+    </div> 
+
+    <script>
+        // Otvaranje popup window-a
+        popup_button.addEventListener("click", function(event) {
+            event.preventDefault();
+            popup_window.style.display = "block";
+        });
+
+        // zatvaranje popup window-a
+        close_button.addEventListener("click", function() {
+            popup_window.style.display = "none";
+        });
+    </script>     
+
 </body>
 </html>
+
+   

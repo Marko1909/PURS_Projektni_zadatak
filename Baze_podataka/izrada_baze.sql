@@ -9,10 +9,10 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON Projektni.* TO app@'%';
 
 CREATE TABLE ovlasti (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    naziv VARCHAR(100)
+    ovlast VARCHAR(100)
 );
 
-INSERT INTO ovlasti (naziv) VALUES
+INSERT INTO ovlasti (ovlast) VALUES
 	('Administrator'),
     ('Korisnik');
 
@@ -113,5 +113,9 @@ INSERT INTO status_korisnika (id_korisnika, id_vrata, datum, id_rezultata) VALUE
     (1, 1, '2024-01-17 09:18:16', 1),
     (2, 1, '2024-01-17 10:57:25', 1),
     (1, 1, '2024-01-17 12:32:44', 1),
-    (2, 1, '2024-01-17 09:14:14', 1),
+    (2, 2, '2024-01-17 11:17:03', 1),
+    (2, 2, '2024-01-17 12:01:51', 1),
     (5, 1, '2024-01-17 15:32:33', 1);
+    
+    
+
