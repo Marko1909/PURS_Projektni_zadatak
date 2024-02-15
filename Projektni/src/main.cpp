@@ -53,7 +53,7 @@ void loop() {
         return;
 
     String id = "";
-    
+    // Pretvaranje pročitane vrijednosti u string i dodavanje razmaka između dijelova UID-a
     for (int i = 0; i < rfid.uid.size; i++){
         id += rfid.uid.uidByte[i] < 0x10 ? " 0" : " ";
         id += String(rfid.uid.uidByte[i], HEX);
@@ -63,6 +63,8 @@ void loop() {
     Serial.print("UID: ");
     Serial.println(id);
     delay(1000);
+
+
 
     // String temperatura = "22";
     // doc["temperatura"] = temperatura;
