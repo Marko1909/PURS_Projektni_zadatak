@@ -101,26 +101,35 @@ def uredi_korisnika(id_korisnik):
 #     return response
 
 
-@app.route('/temperatura/<int:id_stupca>', methods=['POST'])
-def delete(id_stupca):
-    id_podatka = request.args.get('id_podatka')
+# @app.route('/temperatura/<int:id_stupca>', methods=['POST'])
+# def delete(id_stupca):
+#     id_podatka = request.args.get('id_podatka')
 
-    if id_podatka == '' or id_podatka == '1' and id_stupca is not None:
-        query = render_template('deleteTemp.sql', id_temp=id_stupca)
-        g.cursor.execute(query)  
-        if id_podatka == '1':
-            return redirect(url_for('index', id=id_podatka))
-        else:
-            return redirect(url_for('index'))
+#     if id_podatka == '' or id_podatka == '1' and id_stupca is not None:
+#         query = render_template('deleteTemp.sql', id_temp=id_stupca)
+#         g.cursor.execute(query)  
+#         if id_podatka == '1':
+#             return redirect(url_for('index', id=id_podatka))
+#         else:
+#             return redirect(url_for('index'))
 
-    elif id_podatka == '2' and id_stupca is not None:
-        query = render_template('deleteVlaga.sql', id_vlage=id_stupca)
-        g.cursor.execute(query)
-        return redirect(url_for('index', id=id_podatka))
+#     elif id_podatka == '2' and id_stupca is not None:
+#         query = render_template('deleteVlaga.sql', id_vlage=id_stupca)
+#         g.cursor.execute(query)
+#         return redirect(url_for('index', id=id_podatka))
     
-    else:
-        return
+#     else:
+#         return
 
+
+@app.post('/provjera')
+def provjera_kartice():
+    response = make_response()
+    print(request.data)
+    
+    response.data = 'Uspješno ste postavili temperaturu'
+    response.status_code = 201
+    return response
 
 
 if __name__ == '__main__':
