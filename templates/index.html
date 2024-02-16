@@ -48,15 +48,15 @@
             </div>
            
 
-                {% if dozvole %}
+                {% if prostorije %}
                 <table class="tablica">
                     <thead>
                         <th>Dozvole</th>
                     </thead>
                     <tbody>
-                        {% for dozvola in dozvole %}
+                        {% for prostorija in prostorije %}
                         <tr>
-                            <td>{{dozvola[0]}}</td>
+                            <td>{{prostorija[0]}}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

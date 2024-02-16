@@ -1,3 +1,3 @@
-SELECT prostorija FROM dozvole_korisnika
-LEFT JOIN vrata ON dozvole_korisnika.id_vrata = vrata.id
-WHERE id_korisnika = '{{id_korisnika}}'
+SELECT id_korisnika, rfid, id_vrata FROM dozvole_korisnika
+LEFT JOIN korisnik ON dozvole_korisnika.id_korisnika = korisnik.id
+LEFT JOIN kartice ON korisnik.id_kartice = kartice.id

@@ -13,11 +13,13 @@ def before_request_func():
     g.connection = MySQLdb.connect(host="localhost", user="app", passwd="1234", db="Projektni")
     g.cursor = g.connection.cursor()
 
-    if request.path == '/login' or request.path.startswith('/static'):
+    if request.path == '/provjera':
+        pass
+    elif request.path == '/login' or request.path.startswith('/static'):
         return
-    if session.get('username') is None:
+    elif session.get('username') is None:
         return redirect(url_for('login'))
-    
+
 
 @app.after_request
 def after_request_func(response):
@@ -29,13 +31,13 @@ def after_request_func(response):
 @app.get('/')
 def index():
     id = request.args.get('id')
-    if id == None or id == '1':   
+    if id == None or id == '1':
         g.cursor.execute(render_template('getStatuse.sql', id_korisnika=session.get('id')))
         list_statusa = g.cursor.fetchall()
 
         response = render_template('index.html', naslov='Početna stranica', username=session.get('username').capitalize(), ovlasti = session.get('ovlasti'), statusi=list_statusa)
         return response, 200
-    
+
 
     elif id == '2':
         g.cursor.execute(render_template('getKorisnike.sql'))
@@ -69,18 +71,18 @@ def provjera():
         return redirect(url_for('index'))
     else:
         return render_template('login.html', naslov='Stranica za prijavu', poruka='Uneseni su pogrešni podatci!')
-    
+
 
 @app.get('/korisnik/<int:id_korisnik>')
 def uredi_korisnika(id_korisnik):
     g.cursor.execute(render_template('getStatuse.sql', id_korisnika=id_korisnik))
     list_status = g.cursor.fetchall()
 
-    g.cursor.execute(render_template('getDozvole.sql', id_korisnika=id_korisnik))
-    list_dozvola = g.cursor.fetchall()
+    g.cursor.execute(render_template('getProstorije.sql', id_korisnika=id_korisnik))
+    list_prostorija = g.cursor.fetchall()
 
 
-    response = render_template('index.html', naslov='Početna stranica', username=session.get('username').capitalize(), ovlasti = session.get('ovlasti'), dozvole=list_dozvola, statusi=list_status)
+    response = render_template('index.html', naslov='Početna stranica', username=session.get('username').capitalize(), ovlasti = session.get('ovlasti'), prostorije=list_prostorija, statusi=list_status)
     return response, 200
 
 
@@ -107,7 +109,7 @@ def uredi_korisnika(id_korisnik):
 
 #     if id_podatka == '' or id_podatka == '1' and id_stupca is not None:
 #         query = render_template('deleteTemp.sql', id_temp=id_stupca)
-#         g.cursor.execute(query)  
+#         g.cursor.execute(query)
 #         if id_podatka == '1':
 #             return redirect(url_for('index', id=id_podatka))
 #         else:
@@ -117,7 +119,7 @@ def uredi_korisnika(id_korisnik):
 #         query = render_template('deleteVlaga.sql', id_vlage=id_stupca)
 #         g.cursor.execute(query)
 #         return redirect(url_for('index', id=id_podatka))
-    
+
 #     else:
 #         return
 
@@ -125,9 +127,33 @@ def uredi_korisnika(id_korisnik):
 @app.post('/provjera')
 def provjera_kartice():
     response = make_response()
-    print(request.data)
-    
-    response.data = 'Uspješno ste postavili temperaturu'
+    uid = request.data.decode("utf-8")
+    rfid = uid[8:19]
+    id_vrata = uid[29:-1]
+
+    print(uid)
+    print(rfid)
+    print(id_vrata)
+
+
+    # Provjera dozvola korisnika
+    g.cursor.execute(render_template('getDozvole.sql'))
+    list_dozvola = g.cursor.fetchall()
+
+    response.data = 'Odbijeno'
+    rezultat = 2
+
+    for dozvole in list_dozvola:
+        if str(dozvole[1]) == rfid and str(dozvole[2]) == id_vrata:
+            response.data = 'Dozvoljeno'
+            rezultat = 1
+
+
+    # Spremanje pokušaja otvaranja vrata
+    query = render_template('writeStatus.sql', value_kor = dozvole[0], value_vrata = id_vrata, value_rez = rezultat)
+    g.cursor.execute(query)
+
+
     response.status_code = 201
     return response
 
