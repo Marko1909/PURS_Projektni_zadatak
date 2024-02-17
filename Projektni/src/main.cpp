@@ -12,6 +12,9 @@
 #define MOSI 23
 #define MISO 19
 
+#define GREEN_LED 12
+#define RED_LED 13
+
 
 MFRC522 rfid(SDA, RESET);
 
@@ -31,7 +34,7 @@ String provjera(byte uid_byte[], int uid_size);
 void setup() {
     Serial.begin(9600);
     SPI.begin();
-    rfid.PCD_Init(); // Inicijlizacija MFRC522
+    rfid.PCD_Init(); // Inicijalizacija MFRC522
 
     // Spajanje na WiFi
     WiFi.begin(SSID, PASSWORD);
@@ -41,6 +44,9 @@ void setup() {
         delay(500);
     }
     Serial.println(WiFi.localIP());
+
+    pinMode(GREEN_LED, OUTPUT);
+    pinMode(RED_LED, OUTPUT);
 }
 
 void loop() {
@@ -66,9 +72,32 @@ void loop() {
         http.addHeader("Content-Type", "application/json");
         int httpResponseCode = http.POST(json);
 
-        Serial.print("Status code: ");
-        Serial.println(httpResponseCode);
-        Serial.println(http.getString());
+        if (httpResponseCode == 201) // Request prošao
+        {
+            // Čitanje payloada
+            String responsePayload = http.getString();
+            Serial.println(responsePayload);
+
+            // Provjera sadrži li payload "Dozvoljeno"
+            bool dozvola = responsePayload.indexOf("Dozvoljeno") != -1;
+
+            if (dozvola == true)
+            {
+                digitalWrite(GREEN_LED, HIGH);
+                delay(3000);
+                digitalWrite(GREEN_LED, LOW);
+            }
+            else
+            {
+                digitalWrite(RED_LED, HIGH);
+                delay(3000);
+                digitalWrite(RED_LED, LOW);
+            }
+        }
+        else
+        {
+            Serial.println("HTTP POST failed");
+        }
 
         http.end();
 
