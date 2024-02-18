@@ -87,21 +87,24 @@ def uredi_korisnika(id_korisnik):
     return response, 200
 
 
+@app.route('/add_korisnik', methods=['POST'])
+def add_korisnik():
+    if request.method == 'POST':
+        ime = request.form.get('ime')
+        prezime = request.form.get('prezime')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        id_ovlasti = request.form.get('tip')
+        rfid_kartice = request.form.get('rfid')
 
-# @app.post('/temperatura')
-# def put_temperatura():
-#     global temperatura
-#     response = make_response()
+        # Tu treba spremit rfid_kartice u bazu pod kartice (rfid), onda treba povuc te sve katice iz baze i usporedit s ovom upisanom kako
+        # bi dobio id te nove kartice koji onda spremas ispod u korisnika
 
-#     if request.json.get('temperatura') is not None:
-#         query = render_template('writeTemperature.sql', value=request.json.get('temperatura'))
-#         g.cursor.execute(query)
-#         response.data = 'Uspješno ste postavili temperaturu'
-#         response.status_code = 201
-#     else:
-#         response.data = 'Niste napisali ispravan ključ'
-#         response.status_code = 404
-#     return response
+        query = render_template('addKorisnik.sql', ime=ime, prezime=prezime, username=username, password=password, id_ovlasti=id_ovlasti, id_kartice=id_kartice)
+        g.cursor.execute(query)
+
+        return redirect(url_for('index'))
+
 
 
 @app.route('/dozvola/<int:id_vrata>', methods=['POST'])
@@ -123,22 +126,7 @@ def delete_dozvolu(id_vrata):
 
     else:
         return
-
-@app.route('/add_korisnik', methods=['POST'])
-def add_korisnik():
-    if request.method == 'POST':
-        ime = request.form['ime']
-        prezime = request.form['prezime']
-        username = request.form['username']
-        password = request.form['password']
-        rfid_kartica = request.form['rfid_kartica']
-        tip_korisnika = request.form['tip_korisnika']
-
-        query = render_template('addKorisnik.sql', ime=ime, prezime=prezime, username=username, password=password, rfid_kartica=rfid_kartica, tip_korisnika=tip_korisnika)
-        g.cursor.execute(query)
-        g.connection.commit()
-
-        return redirect(url_for('index'))
+       
 
 @app.post('/provjera')
 def provjera_kartice():

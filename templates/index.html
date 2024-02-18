@@ -137,13 +137,13 @@
                 <input type="password" id="password" name="password" required><br>
 
                 <label for="rfid">RFID:</label>
-                <input type="text" id="rfid" name="rfid" required><br>
+                <input type="text" id="rfid" name="rfid" maxlength="11" required><br>
 
-                <input type="radio" id="korisnik" name="tip" value="korisnik" required>
+                <input type="radio" id="korisnik" name="tip" value="2" required>
                 <label for="korisnik">Korisnik</label><br>
-                <input type="radio" id="admin" name="tip" value="admin" required>
+                <input type="radio" id="admin" name="tip" value="1" required>
                 <label for="admin">Admin</label><br>
-
+                
                 <input type="submit" value="Submit" class="button">
             </form>
             <button id="close_button">Close</button>
@@ -167,6 +167,22 @@
         window.onload = function() {
             var dozvoleSel = document.getElementById("izbor_dozvola");
             var izabranaDozvola = dozvoleSel.value;
+        }
+
+        var input = document.getElementById("rfid");
+        var prev_input = 0;
+
+        input.onkeydown = function () {
+            if (input.value.length > 0 && prev_input < input.value.length) {
+                if (input.value.length == 2 || input.value.length == 5 || input.value.length == 8) {
+                    input.value += " ";   
+                }
+                prev_input = input.value.length;
+            }
+            else if (prev_input > input.value.length) {
+                input.value = "";
+                prev_input = 0;
+                }
         }
 
     </script>
