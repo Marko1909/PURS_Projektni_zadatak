@@ -50,15 +50,17 @@ void loop() {
     // Resetiraj petlju ako kartica nije u blizini čitača. Stavlja proces u stanje mirovanja.
     if ( ! rfid.PICC_IsNewCardPresent())
         return;
+        
     // Provjerava je li NUID pročitan
-    if (rfid.PICC_ReadCardSerial())
-    {
+    if (rfid.PICC_ReadCardSerial()) {
         String rezultat = provjera(rfid.uid.uidByte, rfid.uid.size);
         Serial.print("UID: ");
         Serial.println(rezultat);
+
         // Spremanje UID-a kao json i slanje
         doc["uid"] = rezultat;
         doc["vrata"] = 2; // Vrata 1-Antolic && Vrata2-Orlovic
+
         String json;
         serializeJson(doc, json);
         http.begin(serverName);
@@ -68,8 +70,8 @@ void loop() {
         Serial.print("Status code: ");
         Serial.println(httpResponseCode);
 
-        if (httpResponseCode == 201) // Request prošao
-        {
+        // Request prošao
+        if (httpResponseCode == 201) {
             // Čitanje payloada
             String responsePayload = http.getString();
             Serial.println(responsePayload);
@@ -77,8 +79,7 @@ void loop() {
             // Provjera sadrži li payload "Dozvoljeno"
             bool dozvola = responsePayload.indexOf("Dozvoljeno") != -1;
 
-            if (dozvola == true)
-            {
+            if (dozvola == true) {
                 digitalWrite(GREEN_LED, HIGH);
                 tone(BUZZER, 3000);
                 delay(1500);
@@ -86,11 +87,9 @@ void loop() {
                 delay(1500);
                 digitalWrite(GREEN_LED, LOW);
             }
-            else
-            {
+            else {
                 digitalWrite(RED_LED, HIGH);
-                for (int i = 0; i < 3; i++)
-                {
+                for (int i = 0; i < 3; i++) {
                     tone(BUZZER, 300);
                     delay(500);
                     noTone(BUZZER);
@@ -99,21 +98,19 @@ void loop() {
                 digitalWrite(RED_LED, LOW);
             }
         }
-        else
-        {
+        else {
             Serial.println("HTTP POST failed");
         }
 
         http.end();
 
-        delay(1000);
     }
     else
         return;
 }
+
 // Funkcija za pretvaranje pročitane vrijednosti u string i dodavanje razmaka između dijelova UID-a
-String provjera(byte uid_byte[], int uid_size)
-{
+String provjera(byte uid_byte[], int uid_size) {
     String id = "";
     for (int i = 0; i < uid_size; i++)
     {

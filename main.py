@@ -7,6 +7,8 @@ app = Flask("Flask aplikacija")
 
 app.secret_key = '_5#y2L"F4Q8z-n-xec]/'
 
+
+# Izvršavanje potrebnih radnji prije zahtjeva
 @app.before_request
 def before_request_func():
     g.connection = MySQLdb.connect(host="localhost", user="app", passwd="1234", db="Projektni")
@@ -20,6 +22,7 @@ def before_request_func():
         return redirect(url_for('login'))
 
 
+# Izvršavanje potrebnih radnji nakon zahtjeva
 @app.after_request
 def after_request_func(response):
     g.connection.commit()
@@ -27,6 +30,7 @@ def after_request_func(response):
     return response
 
 
+# Prikazivanje početne stranice i prosljeđivanje na stranice home i korisnici
 @app.get('/')
 def index():
     id = request.args.get('id')
@@ -46,18 +50,21 @@ def index():
         return response, 200
 
 
+# Prikaz stranice za login
 @app.get('/login')
 def login():
     response = render_template('login.html', naslov='Stranica za prijavu')
     return response, 200
 
 
+# Odjava korisnika sa stranice
 @app.get('/logout')
 def logout():
     session.pop('username')
     return redirect(url_for('login'))
 
 
+# Provjera korisničkih podataka u loginu i prosljeđivanje na početnu stranicu
 @app.post('/login')
 def provjera():
     g.cursor.execute(render_template('selectKorisnik.sql', user=request.form.get('username'), pasw=request.form.get('password')))
@@ -72,6 +79,7 @@ def provjera():
         return render_template('login.html', naslov='Stranica za prijavu', poruka='Uneseni su pogrešni podatci!')
 
 
+# Prikaz stranice s korisničkim podacima (pristupno samo adminu)
 @app.get('/korisnik/<int:id_korisnik>')
 def uredi_korisnika(id_korisnik):
     g.cursor.execute(render_template('getStatuse.sql', id_korisnika=id_korisnik))
@@ -87,6 +95,7 @@ def uredi_korisnika(id_korisnik):
     return response, 200
 
 
+# Dodavanje/spremanje novog korisnika u bazu podataka
 @app.route('/add_korisnik', methods=['POST'])
 def add_korisnik():
     if request.method == 'POST':
@@ -109,6 +118,7 @@ def add_korisnik():
         return redirect(url_for('index', id=2))
 
 
+# Brisanje dozvola pojedinog korisnika
 @app.route('/dozvola/<int:id_vrata>', methods=['POST'])
 def delete_dozvolu(id_vrata):
     id_korisnika = request.args.get('id_korisnika')
@@ -120,6 +130,7 @@ def delete_dozvolu(id_vrata):
         return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
        
 
+# Dodavanje dozvole pojedinom korisniku
 @app.route('/add_dozvolu', methods=['POST'])
 def add_dozvolu():
     if request.method == 'POST':
@@ -143,6 +154,7 @@ def add_dozvolu():
             return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
 
 
+# Provjera dozvole očitane kartice i spremanje pokušaja ulaska
 @app.post('/provjera')
 def provjera_kartice():
     response = make_response()
