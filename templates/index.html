@@ -25,7 +25,7 @@
         </nav>
 
         <main>
-            {% if statusi %}
+            {% if statusi or statusi == "" %}
             <div class="div_statusi">
                  <table class="tablica">
                     <thead>
@@ -47,7 +47,7 @@
                 </table>
             </div>
 
-           {% if prostorije %}
+           {% if prostorije or prostorije == "" %}
             <div class="dozvole">
                 <table class="dozvole tablica">
                     <thead>
@@ -70,7 +70,7 @@
                     </tbody>
                 </table>
             </div>
-                <form class="form_dropdown" id="form_dropdown">
+                <form id="form_dropdown" class="form_dropdown" method="POST" action="/add_dozvolu">
                     Izbor nove dozvole: <select id="izbor_dozvola" name="izbor_dozvola" >
                       <option value="">--Select--</option>
                       {% for door in vrata %}

@@ -112,23 +112,23 @@ def add_korisnik():
 
 @app.route('/dozvola/<int:id_vrata>', methods=['POST'])
 def delete_dozvolu(id_vrata):
-    id_podatka = request.args.get('id_podatka')
+    id_korisnika = request.args.get('id_korisnika')
 
-    if id_podatka == '' or id_podatka == '1' and id_stupca is not None:
-        query = render_template('deleteTemp.sql', id_temp=id_stupca)
+    if id_vrata and id_korisnika is not None:
+        query = render_template('deleteDozvola.sql', id_korisnika=id_korisnika, id_vrata=id_vrata)
         g.cursor.execute(query)
-        if id_podatka == '1':
-            return redirect(url_for('index', id=id_podatka))
-        else:
-            return redirect(url_for('index'))
 
-    elif id_podatka == '2' and id_stupca is not None:
-        query = render_template('deleteVlaga.sql', id_vlage=id_stupca)
-        g.cursor.execute(query)
-        return redirect(url_for('index', id=id_podatka))
+        return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
+       
 
-    else:
-        return
+@app.route('/add_dozvolu', methods=['POST'])
+def add_dozvolu():
+    if request.method == 'POST':
+        dozvola = request.form.get('izbor_dozvola')
+        if dozvola != '--Select--':
+            g.cursor.execute(render_template('getStatuse.sql', id_korisnika=id_korisnik))
+            list_status = g.cursor.fetchall()
+
 
 @app.post('/provjera')
 def provjera_kartice():
