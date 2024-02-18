@@ -109,7 +109,6 @@ def add_korisnik():
         return redirect(url_for('index', id=2))
 
 
-
 @app.route('/dozvola/<int:id_vrata>', methods=['POST'])
 def delete_dozvolu(id_vrata):
     id_korisnika = request.args.get('id_korisnika')
@@ -142,6 +141,7 @@ def add_dozvolu():
             
         else:
             return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
+
 
 @app.post('/provjera')
 def provjera_kartice():
