@@ -184,12 +184,13 @@ main{
 }
 
 .popup_content {
+    display: grid;
     background-color: #ADADAD;
     margin: 10% auto;
     padding: 20px;
     border: 1px solid #000000; /* Change border color to black */
     width: 50%; /* Adjust the width as needed */
-    max-width: 500px; /* Limit the maximum width */
+    max-width: 400px; /* Limit the maximum width */
     font-weight: normal; /* Use normal font weight */
 }
 
