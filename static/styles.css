@@ -171,7 +171,7 @@ main{
     color: black;
 }
 
-.popup{
+.popup {
     position: fixed;
     z-index: 1;
     left: 0;
@@ -181,13 +181,53 @@ main{
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
     display: none;
-  } 
+}
 
-.popup_content{
-    background-color: white;
+.popup_content {
+    background-color: #ADADAD;
     margin: 10% auto;
     padding: 20px;
-    border: 1px solid black;
-    width: 30%;
-    font-weight: bolder;
+    border: 1px solid #000000; /* Change border color to black */
+    width: 50%; /* Adjust the width as needed */
+    max-width: 500px; /* Limit the maximum width */
+    font-weight: normal; /* Use normal font weight */
+}
+
+.popup_content label {
+    display: block;
+    width: 120px; /* Set a fixed width for labels */
+    float: left; /* Float labels to the left */
+    clear: left; /* Clear floats to ensure labels stack vertically */
+    margin-bottom: 10px; /* Add space between labels */
+}
+
+.popup_content input[type="text"],
+.popup_content input[type="password"] {
+    width: calc(100% - 130px); /* Calculate the width of inputs to fill remaining space */
+    float: left; /* Float inputs to the left */
+    margin-bottom: 10px; /* Add space between inputs */
+}
+
+.popup_content .radio_label {
+    width: calc(100% - 130px); /* Calculate the width of radio buttons to fill remaining space */
+    float: right; /* Float radio buttons to the left */
+    margin-bottom: 10px; /* Add space between radio buttons */
+}
+
+.popup_content input[type="radio"] {
+    width: auto; /* Set auto width for radio buttons */
+    margin-right: 10px; /* Add space between radio buttons and their labels */
+}
+
+.popup_content button,
+.popup_content input[type="submit"] {
+    margin-top: 20px;
+    width: 40%; /* Make buttons fill the container */
+    padding: 10px; /* Add padding to buttons */
+    text-align: center; /* Center button text */
+}
+
+.popup_content button:hover {
+    background-color: #5A5A5A;
+    color: #ffffff; /* Change button text color on hover */
 }

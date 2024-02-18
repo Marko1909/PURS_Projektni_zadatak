@@ -15,15 +15,15 @@
                 <img src="{{ url_for('static', filename='images/user-icon.png') }}" alt="User icon", width="70px">
             </div>
         </header>
-        
-        <nav>  
+
+        <nav>
             <a href="{{ url_for('logout') }}">Logout</a>
             <a href="/?id=1">Home</a>
             {% if ovlasti == 1 %}
             <a href="/?id=2">Korisnici</a>
             {% endif %}
         </nav>
-        
+
         <main>
             {% if statusi %}
             <div class="div_statusi">
@@ -48,7 +48,7 @@
             </div>
 
            {% if prostorije %}
-            <div class="dozvole"> 
+            <div class="dozvole">
                 <table class="dozvole tablica">
                     <thead>
                         <th>Dozvole</th>
@@ -79,8 +79,8 @@
                     </select>
                     <br><br>
                     <input type="submit" value="Submit">
-                </form> 
-               
+                </form>
+
             {% endif %}
 
 
@@ -115,20 +115,42 @@
                 </table>
             </div>
 
-            {% endif %}     
+            {% endif %}
 
-        </main>     
+        </main>
     </div>
 
     <div id="popup_window" class="popup">
         <div class="popup_content">
-           <h1>Pop-up Window</h1>
-            <p>This is a pop-up window.</p>
-            <button id="close_button">Close</button> 
+            <h1>Dodaj korisnika</h1>
+            <form id="add_korisnik_form" method="POST" action="/add_korisnik">
+                <label for="ime">Ime:</label>
+                <input type="text" id="ime" name="ime" required><br>
+
+                <label for="prezime">Prezime:</label>
+                <input type="text" id="prezime" name="prezime" required><br>
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+
+                <label for="rfid">RFID:</label>
+                <input type="text" id="rfid" name="rfid" required><br>
+
+                <input type="radio" id="korisnik" name="tip" value="korisnik" required>
+                <label for="korisnik">Korisnik</label><br>
+                <input type="radio" id="admin" name="tip" value="admin" required>
+                <label for="admin">Admin</label><br>
+
+                <input type="submit" value="Submit" class="button">
+            </form>
+            <button id="close_button">Close</button>
         </div>
-        
-    </div> 
- 
+    </div>
+
+
     <script>
         // Otvaranje popup window-a
         popup_button.addEventListener("click", function(event) {
@@ -146,10 +168,8 @@
             var dozvoleSel = document.getElementById("izbor_dozvola");
             var izabranaDozvola = dozvoleSel.value;
         }
-        
-    </script>     
+
+    </script>
 
 </body>
 </html>
-
-   
