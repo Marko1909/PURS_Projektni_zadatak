@@ -1,0 +1,1 @@
+SELECT prostorija FROM vrata

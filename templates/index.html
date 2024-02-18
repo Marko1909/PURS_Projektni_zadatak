@@ -46,26 +46,48 @@
                     </tbody>
                 </table>
             </div>
-           
 
-                {% if dozvole %}
-                <table class="tablica">
+           {% if prostorije %}
+            <div class="dozvole"> 
+                <table class="dozvole tablica">
                     <thead>
                         <th>Dozvole</th>
+                        <th>Obriši</th>
                     </thead>
                     <tbody>
-                        {% for dozvola in dozvole %}
-                        <tr>
-                            <td>{{dozvola[0]}}</td>
-                        </tr>
+                        {% for prostorija in prostorije %}
+                        {% if prostorija[0] == id_korisnika %}
+                            <tr>
+                                <td>{{prostorija[1]}}</td>
+                                <td>
+                                    <form action="{{ url_for('delete_dozvolu', id_korisnika=prostorija[0], id_vrata=prostorija[2]) }}" method="POST" >
+                                        <input type="submit" value="Obriši" class="button">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
-                {% endif %}
+            </div>
+                <form class="form_dropdown" id="form_dropdown">
+                    Izbor nove dozvole: <select id="izbor_dozvola" name="izbor_dozvola" >
+                      <option value="">--Select--</option>
+                      {% for door in vrata %}
+                      <option value="{{door[0]}}">{{door[0]}}</option>
+                      {% endfor %}
+                    </select>
+                    <br><br>
+                    <input type="submit" value="Submit">
+                </form> 
+               
+            {% endif %}
 
 
 
             {% elif korisnici %}
+            <button id="popup_button" class="popup_button">Dodavanje novog korisnika ></button>
+
             <div class="div_korisnici">
                 <table class="tablica">
                     <thead>
@@ -92,8 +114,6 @@
                     </tbody>
                 </table>
             </div>
-            
-            <button id="popup_button">Dodavanje novog korisnika</button>
 
             {% endif %}     
 
@@ -108,7 +128,7 @@
         </div>
         
     </div> 
-
+ 
     <script>
         // Otvaranje popup window-a
         popup_button.addEventListener("click", function(event) {
@@ -116,10 +136,17 @@
             popup_window.style.display = "block";
         });
 
-        // zatvaranje popup window-a
+        // Zatvaranje popup window-a
         close_button.addEventListener("click", function() {
             popup_window.style.display = "none";
         });
+
+        // Dropdown izbornik
+        window.onload = function() {
+            var dozvoleSel = document.getElementById("izbor_dozvola");
+            var izabranaDozvola = dozvoleSel.value;
+        }
+        
     </script>     
 
 </body>

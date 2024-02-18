@@ -118,5 +118,4 @@ INSERT INTO status_korisnika (id_korisnika, id_vrata, datum, id_rezultata) VALUE
     (5, 1, '2024-01-18 08:32:33', 1),
     (5, 1, '2024-01-18 16:27:52', 1);
     
-    
 
