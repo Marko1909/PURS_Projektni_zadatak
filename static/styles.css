@@ -218,6 +218,7 @@ main{
 .popup_content input[type="radio"] {
     width: auto; /* Set auto width for radio buttons */
     margin-right: 10px; /* Add space between radio buttons and their labels */
+    margin-bottom: 15px
 }
 
 .popup_content button,
@@ -226,6 +227,7 @@ main{
     width: 40%; /* Make buttons fill the container */
     padding: 10px; /* Add padding to buttons */
     text-align: center; /* Center button text */
+    justify-self: center;
 }
 
 .popup_content button:hover {

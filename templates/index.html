@@ -139,11 +139,12 @@
                 <label for="rfid">RFID:</label>
                 <input type="text" id="rfid" name="rfid" maxlength="11" required><br>
 
-                <input type="radio" id="korisnik" name="tip" value="2" required>
-                <label for="korisnik">Korisnik</label><br>
-                <input type="radio" id="admin" name="tip" value="1" required>
-                <label for="admin">Admin</label><br>
-                
+                <label for="korisnik">Korisnik</label>
+                <input type="radio" id="korisnik" name="tip" value="2" required><br>
+                <label for="admin">Admin</label>
+                <input type="radio" id="admin" name="tip" value="1" required><br>
+
+                <label></label>
                 <input type="submit" value="Submit" class="button">
             </form>
             <button id="close_button" class="button">Close</button>
@@ -175,7 +176,7 @@
         input.onkeydown = function () {
             if (input.value.length > 0 && prev_input < input.value.length) {
                 if (input.value.length == 2 || input.value.length == 5 || input.value.length == 8) {
-                    input.value += " ";   
+                    input.value += " ";
                 }
                 prev_input = input.value.length;
             }

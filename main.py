@@ -97,10 +97,13 @@ def add_korisnik():
         id_ovlasti = request.form.get('tip')
         rfid_kartice = request.form.get('rfid')
 
-        # Tu treba spremit rfid_kartice u bazu pod kartice (rfid), onda treba povuc te sve katice iz baze i usporedit s ovom upisanom kako
-        # bi dobio id te nove kartice koji onda spremas ispod u korisnika
+        query = render_template('addRFID.sql', rfid=rfid_kartice)
+        g.cursor.execute(query)
 
-        query = render_template('addKorisnik.sql', ime=ime, prezime=prezime, username=username, password=password, id_ovlasti=id_ovlasti, id_kartice=id_kartice)
+        g.cursor.execute(render_template('getRFID.sql', rfid=rfid_kartice))
+        id_nove_kartice = g.cursor.fetchall()
+
+        query = render_template('addKorisnik.sql', ime=ime, prezime=prezime, username=username, password=password, id_ovlasti=id_ovlasti, id_kartice=id_nove_kartice[0][0])
         g.cursor.execute(query)
 
         return redirect(url_for('index'))
@@ -126,7 +129,6 @@ def delete_dozvolu(id_vrata):
 
     else:
         return
-       
 
 @app.post('/provjera')
 def provjera_kartice():

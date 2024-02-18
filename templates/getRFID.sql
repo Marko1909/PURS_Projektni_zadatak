@@ -1,0 +1,1 @@
+SELECT id FROM kartice WHERE rfid = '{{rfid}}'
