@@ -86,10 +86,6 @@ main{
     display: block;
 }
 
-.form_dropdown{
-    margin-top: 30px;
-    margin-left: 25px;
-}
 
 
 .dropbtn {
@@ -100,13 +96,13 @@ main{
     border: none;
   }
   
-  /* The container <div> - needed to position the dropdown content */
+
   .dropdown {
     position: relative;
     display: inline-block;
   }
   
-  /* Dropdown Content (Hidden by Default) */
+
   .dropdown-content {
     display: none;
     position: absolute;
@@ -116,7 +112,7 @@ main{
     z-index: 1;
   }
   
-  /* Links inside the dropdown */
+
   .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -124,15 +120,14 @@ main{
     display: block;
   }
   
-  /* Change color of dropdown links on hover */
+
   .dropdown-content a:hover {background-color: #ddd;}
   
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+  .dropdown:hover .dropdown-content {display: block;}
+
+
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 
 .button{
@@ -188,49 +183,51 @@ main{
     background-color: #ADADAD;
     margin: 10% auto;
     padding: 20px;
-    border: 1px solid #000000; /* Change border color to black */
-    width: 50%; /* Adjust the width as needed */
-    max-width: 400px; /* Limit the maximum width */
-    font-weight: normal; /* Use normal font weight */
+    border: 1px solid #000000;
+    border-radius: 20px;
+    width: 50%;
+    max-width: 400px;
+    font-weight: normal;
 }
 
 .popup_content label {
     display: block;
-    width: 120px; /* Set a fixed width for labels */
-    float: left; /* Float labels to the left */
-    clear: left; /* Clear floats to ensure labels stack vertically */
-    margin-bottom: 10px; /* Add space between labels */
+    width: 120px;
+    float: left;
+    clear: left;
+    margin-bottom: 10px;
 }
 
 .popup_content input[type="text"],
 .popup_content input[type="password"] {
-    width: calc(100% - 130px); /* Calculate the width of inputs to fill remaining space */
-    float: left; /* Float inputs to the left */
-    margin-bottom: 10px; /* Add space between inputs */
+    width: calc(100% - 130px);
+    float: left;
+    margin-bottom: 10px;
 }
 
 .popup_content .radio_label {
-    width: calc(100% - 130px); /* Calculate the width of radio buttons to fill remaining space */
-    float: right; /* Float radio buttons to the left */
-    margin-bottom: 10px; /* Add space between radio buttons */
+    width: calc(100% - 130px);
+    float: right;
+    margin-bottom: 10px;
 }
 
 .popup_content input[type="radio"] {
-    width: auto; /* Set auto width for radio buttons */
-    margin-right: 10px; /* Add space between radio buttons and their labels */
-    margin-bottom: 15px
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 15px;
 }
 
 .popup_content button,
 .popup_content input[type="submit"] {
     margin-top: 20px;
-    width: 40%; /* Make buttons fill the container */
-    padding: 10px; /* Add padding to buttons */
-    text-align: center; /* Center button text */
+    width: 40%;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
     justify-self: center;
 }
 
 .popup_content button:hover {
     background-color: #5A5A5A;
-    color: #ffffff; /* Change button text color on hover */
+    color: #ffffff;
 }

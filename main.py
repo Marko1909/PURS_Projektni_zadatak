@@ -77,7 +77,7 @@ def uredi_korisnika(id_korisnik):
     g.cursor.execute(render_template('getStatuse.sql', id_korisnika=id_korisnik))
     list_status = g.cursor.fetchall()
 
-    g.cursor.execute(render_template('getProstorije.sql'))
+    g.cursor.execute(render_template('getSveProstorije.sql'))
     list_prostorija = g.cursor.fetchall()
 
     g.cursor.execute(render_template('getVrata.sql'))
@@ -106,7 +106,7 @@ def add_korisnik():
         query = render_template('addKorisnik.sql', ime=ime, prezime=prezime, username=username, password=password, id_ovlasti=id_ovlasti, id_kartice=id_nove_kartice[0][0])
         g.cursor.execute(query)
 
-        return redirect(url_for('index'))
+        return redirect(url_for('index', id=2))
 
 
 
@@ -124,11 +124,24 @@ def delete_dozvolu(id_vrata):
 @app.route('/add_dozvolu', methods=['POST'])
 def add_dozvolu():
     if request.method == 'POST':
-        dozvola = request.form.get('izbor_dozvola')
-        if dozvola != '--Select--':
-            g.cursor.execute(render_template('getStatuse.sql', id_korisnika=id_korisnik))
-            list_status = g.cursor.fetchall()
+        id_vrata = request.form.get('izbor_dozvola')
+        id_korisnika = request.args.get('id_korisnika')
+        
+        if id_vrata != "":
+            g.cursor.execute(render_template('getProstorije.sql', id_vrata=id_vrata, id_korisnika=id_korisnika))
+            list_prostorija = g.cursor.fetchall()
+            print(list_prostorija)
+            if list_prostorija == ():
+                query = render_template('addDozvolu.sql', id_korisnika=id_korisnika, id_vrata=id_vrata)
+                g.cursor.execute(query)
 
+                return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
+            
+            else:
+                return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
+            
+        else:
+            return redirect(url_for('uredi_korisnika', id_korisnik=id_korisnika))
 
 @app.post('/provjera')
 def provjera_kartice():

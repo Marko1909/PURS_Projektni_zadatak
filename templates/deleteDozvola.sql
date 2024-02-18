@@ -1,0 +1,1 @@
+DELETE FROM dozvole_korisnika WHERE id_korisnika = '{{id_korisnika}}' AND id_vrata = '{{id_vrata}}';

@@ -1,1 +1,1 @@
-SELECT prostorija FROM vrata
+SELECT id, prostorija FROM vrata

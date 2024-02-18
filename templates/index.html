@@ -25,7 +25,7 @@
         </nav>
 
         <main>
-            {% if statusi or statusi == "" %}
+            {% if statusi or statusi == () %}
             <div class="div_statusi">
                  <table class="tablica">
                     <thead>
@@ -47,7 +47,7 @@
                 </table>
             </div>
 
-           {% if prostorije or prostorije == "" %}
+           {% if prostorije %}
             <div class="dozvole">
                 <table class="dozvole tablica">
                     <thead>
@@ -70,15 +70,32 @@
                     </tbody>
                 </table>
             </div>
-                <form id="form_dropdown" class="form_dropdown" method="POST" action="/add_dozvolu">
-                    Izbor nove dozvole: <select id="izbor_dozvola" name="izbor_dozvola" >
-                      <option value="">--Select--</option>
-                      {% for door in vrata %}
-                      <option value="{{door[0]}}">{{door[0]}}</option>
-                      {% endfor %}
-                    </select>
-                    <br><br>
-                    <input type="submit" value="Submit">
+            
+                <form id="form_dropdown" class="form_dropdown" method="POST" action="{{ url_for('add_dozvolu', id_korisnika=id_korisnika) }}">
+                    <table class="dozvole tablica">
+                        <thead>
+                            <th>Izbor nove dozvole:</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select id="izbor_dozvola" name="izbor_dozvola" >
+                                    <option value="">--Select--</option>
+                                    {% for door in vrata %}
+                                    <option value="{{door[0]}}">{{door[1]}}</option>
+                                    {% endfor %}
+                                    </select>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="Submit" class="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </form>
 
             {% endif %}
@@ -176,7 +193,7 @@
         input.onkeydown = function () {
             if (input.value.length > 0 && prev_input < input.value.length) {
                 if (input.value.length == 2 || input.value.length == 5 || input.value.length == 8) {
-                    input.value += " ";
+                    input.value += " ";   
                 }
                 prev_input = input.value.length;
             }
